@@ -6,6 +6,7 @@ import { useExchangeRates, useExchangeMutation, QUERY_KEYS } from '@/hooks/useEx
 import { getQuote } from '@/lib/api/exchange';
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useToastStore } from '@/store/toastStore';
 import clsx from 'clsx';
 
 type TabMode = 'BUY' | 'SELL';
@@ -16,7 +17,8 @@ export default function ExchangeForm() {
     const [mode, setMode] = useState<TabMode>('BUY');
     const [currency, setCurrency] = useState<Currency>('USD');
     const [errorMessage, setErrorMessage] = useState<string>('');
-
+    const { showToast } = useToastStore();
+    
     const { register, watch, handleSubmit, setValue, formState: { errors } } = useForm({
         mode: 'onChange',
     });
@@ -52,7 +54,8 @@ export default function ExchangeForm() {
             forexAmount: Number(data.amount),
         }, {
             onSuccess: () => {
-                alert('환전이 완료되었습니다! 🎉');
+                // alert('환전이 완료되었습니다! 🎉');
+                showToast('환전이 성공적으로 완료되었습니다! 🎉', 'success');
                 setErrorMessage('');
                 setValue('amount', '');
             },
@@ -65,7 +68,8 @@ export default function ExchangeForm() {
                     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.RATES });
                     queryClient.invalidateQueries({ queryKey: ['quote'] });
                 } else {
-                    setErrorMessage(errorMessage || '환전에 실패했습니다.');
+                    // setErrorMessage(errorMessage || '환전에 실패했습니다.');
+                    showToast('환전에 실패했습니다. 잔액을 확인해주세요.', 'error');
                 }
             }
         });
