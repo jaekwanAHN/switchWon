@@ -33,6 +33,7 @@ export const useExchangeMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.WALLET });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.RATES });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.HISTORY });
     },
   });
 };
