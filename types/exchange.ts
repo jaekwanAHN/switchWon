@@ -6,7 +6,7 @@ export interface ApiResponse<T> {
 
 export interface ExchangeRate {
   exchangeRateId: number;
-  currency: "USD" | "JPY";
+  currency: 'USD' | 'JPY';
   rate: number;
   changePercentage: number;
   applyDateTime: string;
@@ -14,7 +14,7 @@ export interface ExchangeRate {
 
 export interface WalletItem {
   walletId: number;
-  currency: "KRW" | "USD" | "JPY";
+  currency: 'KRW' | 'USD' | 'JPY';
   balance: number;
 }
 
@@ -39,4 +39,14 @@ export interface OrderRequest {
   fromCurrency: string;
   toCurrency: string;
   forexAmount: number;
+}
+
+export interface OrderHistory {
+  orderId: number;
+  fromCurrency: string;
+  fromAmount: number;
+  toCurrency: string;
+  toAmount: number;
+  appliedRate: number;
+  orderedAt: string;
 }

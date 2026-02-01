@@ -1,14 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  getExchangeRates,
-  getWallet,
-  requestExchange,
-} from "@/lib/api/exchange";
-import { OrderRequest } from "@/types/exchange";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getExchangeRates, getOrderHistory, getWallet, requestExchange } from '@/lib/api/exchange';
+import { OrderRequest } from '@/types/exchange';
 
 export const QUERY_KEYS = {
-  RATES: ["exchangeRates"],
-  WALLET: ["wallet"],
+  RATES: ['exchangeRates'],
+  WALLET: ['wallet'],
+  HISTORY: ['history'],
 };
 
 export const useExchangeRates = () => {
@@ -37,5 +34,13 @@ export const useExchangeMutation = () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.WALLET });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.RATES });
     },
+  });
+};
+
+export const useOrderHistory = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.HISTORY,
+    queryFn: getOrderHistory,
+    staleTime: 1000 * 60,
   });
 };
