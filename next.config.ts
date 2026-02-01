@@ -1,11 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: "https://exchange-example.switchflow.biz/:path*",
+        source: '/api/:path*',
+        destination: 'https://exchange-example.switchflow.biz/:path*',
       },
     ];
   },
